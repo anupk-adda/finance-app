@@ -1,4 +1,4 @@
-# IBM Bob GitHub SDLC Lab
+# Finance APP SDLC
 
 This lab demonstrates how to use **IBM Bob** together with **GitHub.com** to build, test, review, and evolve a small finance analytics application with an end-to-end agentic workflow.
 
