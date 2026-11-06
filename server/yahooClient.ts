@@ -1,5 +1,5 @@
 import YahooFinance from 'yahoo-finance2';
-import { WINDOW_QUERY } from '../src/config/timeWindows';
+import { chartOptions } from '../src/config/timeWindows';
 import type { RawChartPoint, RawQuote } from '../src/domain/normalize';
 import type { TimeWindow } from '../src/types/market';
 
@@ -8,8 +8,6 @@ export interface YahooGateway {
   quote(symbols: string[]): Promise<RawQuote[]>;
   chart(symbol: string, window: TimeWindow): Promise<RawChartPoint[]>;
 }
-
-const DAY_MS = 24 * 60 * 60 * 1000;
 
 export function createYahooGateway(): YahooGateway {
   const yahoo = new YahooFinance({ suppressNotices: ['yahooSurvey'] });
@@ -20,11 +18,7 @@ export function createYahooGateway(): YahooGateway {
       return (await yahoo.quote(symbols)) as RawQuote[];
     },
     async chart(symbol, window) {
-      const { lookbackDays, interval } = WINDOW_QUERY[window];
-      const result = await yahoo.chart(symbol, {
-        period1: new Date(Date.now() - lookbackDays * DAY_MS),
-        interval,
-      });
+      const result = await yahoo.chart(symbol, chartOptions(window));
       return result.quotes;
     },
   };

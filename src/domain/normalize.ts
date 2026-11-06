@@ -53,7 +53,9 @@ export function keepLatestDay(points: PricePoint[]): PricePoint[] {
  * Raw Yahoo candles -> PriceSeries.
  * Drops null/invalid points, de-duplicates timestamps (last one wins), sorts by time,
  * and for the "today" window keeps only the latest trading day.
- * UTC day is correct for US-listed tickers, whose sessions never cross midnight UTC.
+ * "Day" is the UTC calendar day, which is correct for regular-session US candles (14:30-21:00 UTC).
+ * Callers must not request extended-hours candles, and exchanges whose session spans midnight UTC
+ * (e.g. Sydney) would be split across two days.
  */
 export function normalizeSeries(symbol: Ticker, window: TimeWindow, raw: RawChartPoint[]): PriceSeries {
   const byTime = new Map<number, number>();

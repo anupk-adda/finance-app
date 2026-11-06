@@ -18,3 +18,12 @@ body { margin: 0; font-family: -apple-system, 'Segoe UI', system-ui, sans-serif;
 .ranking th, .ranking td { text-align: right; padding: 6px 8px; border-bottom: 1px solid #e0e0e0; }
 .ranking th:nth-child(-n+2), .ranking td:nth-child(-n+2) { text-align: left; }
 .ranking__primary { background: #edf5ff; font-weight: 600; }
+.symbol-form { margin: 24px 0 16px; }
+.symbol-form label { display: block; font-weight: 600; margin-bottom: 6px; }
+.symbol-form__row { display: flex; gap: 8px; }
+.symbol-form input { padding: 8px 12px; border: 1px solid #8d8d8d; min-width: 220px; font: inherit; }
+.symbol-form input[aria-invalid="true"] { border-color: #da1e28; }
+.symbol-form button { padding: 8px 16px; border: 1px solid #0f62fe; background: #0f62fe; color: #fff; cursor: pointer; font: inherit; }
+.symbol-form__clear { background: #fff !important; color: #0f62fe !important; }
+.symbol-form__message, .panel-error { color: #da1e28; margin: 8px 0 0; }
+.panel-note { color: #525252; margin: 0 0 8px; font-size: 13px; }

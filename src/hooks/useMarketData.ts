@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { MarketDataError, type MarketDataErrorCode } from '../services/errors';
 import type { MarketDataService } from '../services/marketDataService';
 import type { PriceSeries, Quote, Ticker, TimeWindow } from '../types/market';
 
@@ -9,6 +10,8 @@ export interface TickerState {
   quote?: Quote;
   series?: PriceSeries;
   error?: string;
+  /** Set when the failure came from the data service, so the UI can tell "unknown ticker" from "network down". */
+  errorCode?: MarketDataErrorCode;
 }
 
 /**
@@ -41,7 +44,8 @@ export function useMarketData(
       } catch (e) {
         if (cancelled) return;
         const error = e instanceof Error ? e.message : 'Failed to load data';
-        setState((prev) => ({ ...prev, [symbol]: { status: 'error', error } }));
+        const errorCode = e instanceof MarketDataError ? e.code : undefined;
+        setState((prev) => ({ ...prev, [symbol]: { status: 'error', error, errorCode } }));
       }
     });
 
